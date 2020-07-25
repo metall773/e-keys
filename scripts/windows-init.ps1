@@ -8,6 +8,8 @@ param(
   $share_pass
 )
 
+$logFile = 'c:\init-log.txt'
+
 Function LogWrite
 {
   Param ([string]$log1, [string]$log2, [string]$log3, [string]$log4,  [string]$log5)
@@ -16,6 +18,12 @@ Function LogWrite
   Write-host $line
   Add-content $logFile -value $Line
 }
+
+LogWrite "------------------------------------------------"
+LogWrite "Script start"
+LogWrite "Runtime parameters"
+LogWrite "------------------------------------------------"
+LogWrite "Format RAW disks"
 
 #format RAW disks
 Get-WmiObject -Class Win32_volume -Filter 'DriveType=5' | `
@@ -39,6 +47,10 @@ foreach ($disk in $disks) {
   $count++
 }
 
+LogWrite "Format RAW disks, done"
+LogWrite "------------------------------------------------"
+LogWrite "Create mount_share file"
+
 #create c:\mount_share.cmd
 $share_file = @"
 cmdkey /add:"$share_host" /user:"Azure\$share_login" /pass:"$share_pass" ;
@@ -49,6 +61,7 @@ net use y: \\$share_host\$share_name
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 [System.IO.File]::WriteAllLines('c:\mount_share.cmd', $share_file, $Utf8NoBomEncoding)
 
+LogWrite "Create mount_share file, done"
 #rename network disk
 #c:\mount_share.cmd
 #$Rename = New-Object -ComObject Shell.Application
