@@ -1,4 +1,12 @@
-#windows 2012 or higer neded
+#windows 2012 or higher needed
+
+#Declare our named parameters here...
+param(
+  $share_host,
+  $share_name,
+  $share_login,
+  $share_pass
+)
 
 #format RAW disks
 Get-WmiObject -Class Win32_volume -Filter 'DriveType=5' | `
@@ -21,3 +29,13 @@ foreach ($disk in $disks) {
         Format-Volume -FileSystem NTFS -NewFileSystemLabel $diskLabel -Confirm:$false -Force
   $count++
 }
+
+#create c:\mount_share.cmd
+$share_file = @"
+cmdkey /add:"$share_host" /user:"Azure\$share_login" /pass:"$share_pass"
+net use y: /delete /y
+net use y: \\$share_host\$share_name /u:"Azure\$share_login" $share_pass
+pause
+"@ 
+
+$share_file -f 'string' | Out-File c:\mount_share.cmd -Value $share_file 
