@@ -1,3 +1,5 @@
+#windows 2012 or higer neded
+
 #format RAW disks
 Get-WmiObject -Class Win32_volume -Filter 'DriveType=5' | `
   Select-Object -First 1 | `
