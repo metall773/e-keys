@@ -5,7 +5,11 @@ param(
   $share_host,
   $share_name,
   $share_login,
-  $share_pass
+  $share_pass,
+  $share_disk_host,
+  $share_disk_name,
+  $share_disk_login,
+  $share_disk_pass
 )
 
 $logFile = 'c:\init-log.txt'
@@ -22,6 +26,14 @@ Function LogWrite
 LogWrite "------------------------------------------------"
 LogWrite "Script start"
 LogWrite "Runtime parameters"
+LogWrite $share_host
+LogWrite $share_name
+LogWrite $share_login
+LogWrite $share_pass
+LogWrite $share_disk_host
+LogWrite $share_disk_name
+LogWrite $share_disk_login
+LogWrite $share_disk_pass
 LogWrite "------------------------------------------------"
 LogWrite "Format RAW disks"
 
@@ -55,7 +67,12 @@ LogWrite "Create mount_share file"
 $share_file = @"
 cmdkey /add:"$share_host" /user:"Azure\$share_login" /pass:"$share_pass" ;
 net use y: /delete /y ;
-net use y: \\$share_host\$share_name 
+net use y: \\$share_host\$share_name ; 
+
+cmdkey /add:"$share_disk_host" /user:"Azure\$share_disk_login" /pass:"$share_disk_pass" ;
+net use w: /delete /y ;
+net use w: \\$share_disk_host\$share_disk_name ; 
+
 "@
 
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
