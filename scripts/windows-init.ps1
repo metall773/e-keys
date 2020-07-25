@@ -79,6 +79,7 @@ $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 [System.IO.File]::WriteAllLines('c:\mount_share.cmd', $share_file, $Utf8NoBomEncoding)
 
 LogWrite "Create mount_share file, done"
+LogWrite "------------------------------------------------"
 LogWrite "Init done"
 #rename network disk
 #c:\mount_share.cmd
