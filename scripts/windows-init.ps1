@@ -38,4 +38,4 @@ net use y: \\$share_host\$share_name /u:"Azure\$share_login" $share_pass
 pause
 "@ 
 
-$share_file -f 'string' | Out-File c:\mount_share.cmd -Value $share_file 
+$share_file -f 'string' | Out-File c:\mount_share.cmd
