@@ -25,15 +25,15 @@ Function LogWrite
 
 LogWrite "------------------------------------------------"
 LogWrite "Script start"
-LogWrite "Runtime parameters"
-LogWrite share_host : $share_host
-LogWrite share_name : $share_name
-LogWrite share_login : $share_login
-LogWrite share_pass : $share_pass
-LogWrite share_disk_host : $share_disk_host
-LogWrite share_disk_name : $share_disk_name
-LogWrite share_disk_login : $share_disk_login
-LogWrite share_disk_pass : $share_disk_pass
+LogWrite "Runtime parameters:"
+LogWrite "share_host:" $share_host
+LogWrite "share_name:" $share_name
+LogWrite "share_login:" $share_login
+LogWrite "share_pass:" $share_pass
+LogWrite "share_disk_host:" $share_disk_host
+LogWrite "share_disk_name:" $share_disk_name
+LogWrite "share_disk_login:" $share_disk_login
+LogWrite "share_disk_pass:" $share_disk_pass
 LogWrite "------------------------------------------------"
 LogWrite "Format RAW disks"
 
@@ -79,6 +79,7 @@ $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 [System.IO.File]::WriteAllLines('c:\mount_share.cmd', $share_file, $Utf8NoBomEncoding)
 
 LogWrite "Create mount_share file, done"
+LogWrite "Init done"
 #rename network disk
 #c:\mount_share.cmd
 #$Rename = New-Object -ComObject Shell.Application
