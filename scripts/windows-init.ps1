@@ -26,14 +26,14 @@ Function LogWrite
 LogWrite "------------------------------------------------"
 LogWrite "Script start"
 LogWrite "Runtime parameters"
-LogWrite $share_host
-LogWrite $share_name
-LogWrite $share_login
-LogWrite $share_pass
-LogWrite $share_disk_host
-LogWrite $share_disk_name
-LogWrite $share_disk_login
-LogWrite $share_disk_pass
+LogWrite share_host : $share_host
+LogWrite share_name : $share_name
+LogWrite share_login : $share_login
+LogWrite share_pass : $share_pass
+LogWrite share_disk_host : $share_disk_host
+LogWrite share_disk_name : $share_disk_name
+LogWrite share_disk_login : $share_disk_login
+LogWrite share_disk_pass : $share_disk_pass
 LogWrite "------------------------------------------------"
 LogWrite "Format RAW disks"
 
