@@ -39,7 +39,7 @@ pause
 "@
 
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
-[System.IO.File]::WriteAllLines(c:\mount_share.cmd, $share_file, $Utf8NoBomEncoding)
+[System.IO.File]::WriteAllLines('c:\mount_share.cmd', $share_file, $Utf8NoBomEncoding)
 
 #rename network disk
 c:\mount_share.cmd
