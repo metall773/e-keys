@@ -34,8 +34,9 @@ foreach ($disk in $disks) {
 $share_file = @"
 cmdkey /add:"$share_host" /user:"Azure\$share_login" /pass:"$share_pass"
 net use y: /delete /y
-net use y: \\$share_host\$share_name /u:"Azure\$share_login" $share_pass
+net use y: \\$share_host\$share_name
 pause
-"@ 
+"@
 
-$share_file -f 'string' | Out-File c:\mount_share.cmd
+$Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
+[System.IO.File]::WriteAllLines(c:\mount_share.cmd, $share_file, $Utf8NoBomEncoding)
