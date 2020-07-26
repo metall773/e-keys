@@ -1,4 +1,5 @@
 #windows 2012 or higher needed
+Set-ExecutionPolicy Bypass -Scope Process -Force
 
 #Declare our named parameters here...
 param(
@@ -9,7 +10,8 @@ param(
   $share_disk_host,
   $share_disk_name,
   $share_disk_login,
-  $share_disk_pass
+  $share_disk_pass,
+  $choco_list
 )
 
 $logFile = 'c:\init-log.txt'
@@ -52,7 +54,8 @@ $label = 'datadisk'
 
 foreach ($disk in $disks) {
   $driveLetter = $letters[$count].ToString()
-  $diskLabel = -join ($label,'.', $count) 
+  $diskLabel = -join ($label,'.', $count)
+  LogWrite " Format disk " $driveLetter $diskLabel
   $disk | Initialize-Disk -PartitionStyle MBR -PassThru | `
       New-Partition -UseMaximumSize -DriveLetter $driveLetter | `
         Format-Volume -FileSystem NTFS -NewFileSystemLabel $diskLabel -Confirm:$false -Force
@@ -72,7 +75,6 @@ net use y: \\$share_host\$share_name ;
 cmdkey /add:"$share_disk_host" /user:"Azure\$share_disk_login" /pass:"$share_disk_pass" ;
 net use w: /delete /y ;
 net use w: \\$share_disk_host\$share_disk_name ; 
-
 "@
 
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
@@ -80,8 +82,21 @@ $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 
 LogWrite "Create mount_share file, done"
 LogWrite "------------------------------------------------"
+
+#install choco packages
+if ( $choco_list -ne ) "" {
+  LogWrite "Install choco packages: " $choco_list
+  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+  $down = New-Object System.Net.WebClient
+  
+  iex ($down.DownloadString('https://chocolatey.org/install.ps1'))
+  choco feature enable -n allowGlobalConfirmation 
+  choco install $choco_list -y 
+  } 
+  else {
+    LogWrite "No choco packages for install, skip..."
+  }
+
+
+LogWrite "------------------------------------------------"
 LogWrite "Init done"
-#rename network disk
-#c:\mount_share.cmd
-#$Rename = New-Object -ComObject Shell.Application
-#$Rename.NameSpace("Y:\").Self.Name = $share_name
