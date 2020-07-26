@@ -84,7 +84,7 @@ LogWrite "Create mount_share file, done"
 LogWrite "------------------------------------------------"
 
 #install choco packages
-if ( $choco_list -ne ) "" {
+if ( $choco_list -ne "" ) {
   LogWrite "Install choco packages: " $choco_list
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   $down = New-Object System.Net.WebClient
