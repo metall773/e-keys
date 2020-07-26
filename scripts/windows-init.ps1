@@ -85,13 +85,13 @@ LogWrite "------------------------------------------------"
 
 #install choco packages
 if ( $choco_list -ne "" ) {
-  LogWrite "Install choco packages: " $choco_list
-  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-  $down = New-Object System.Net.WebClient
-  
-  iex ($down.DownloadString('https://chocolatey.org/install.ps1'))
-  choco feature enable -n allowGlobalConfirmation 
-  choco install $choco_list -y 
+    LogWrite "Install choco packages: " $choco_list
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    $down = New-Object System.Net.WebClient
+    
+    iex ($down.DownloadString('https://chocolatey.org/install.ps1'))
+    choco feature enable -n allowGlobalConfirmation 
+    choco install $choco_list -y 
   } 
   else {
     LogWrite "No choco packages for install, skip..."
