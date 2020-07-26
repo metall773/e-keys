@@ -1,5 +1,4 @@
 #windows 2012 or higher needed
-Set-ExecutionPolicy Bypass -Scope Process -Force
 
 #Declare our named parameters here...
 param(
@@ -36,6 +35,7 @@ LogWrite "share_disk_host:" $share_disk_host
 LogWrite "share_disk_name:" $share_disk_name
 LogWrite "share_disk_login:" $share_disk_login
 LogWrite "share_disk_pass:" $share_disk_pass
+LogWrite "choco_list:" $choco_list
 LogWrite "------------------------------------------------"
 LogWrite "Format RAW disks"
 
