@@ -91,7 +91,7 @@ if ( $choco_list -ne "" ) {
     
     iex ($down.DownloadString('https://chocolatey.org/install.ps1'))
     choco feature enable -n allowGlobalConfirmation 
-    choco install $choco_list -y 
+    $choco_list.Split() |ForEach-Object { choco install $_ -y } 
   } 
   else {
     LogWrite "No choco packages for install, skip..."
