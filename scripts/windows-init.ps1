@@ -82,6 +82,12 @@ $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 
 LogWrite "Create mount_share file, done"
 LogWrite "------------------------------------------------"
+LogWrite "Add to RunOnce mount_share file"
+New-Item -Path "Registry::\HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion" `
+  -Name RunOnce
+Set-ItemProperty "Registry::\HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\RunOnce" `
+  -Name  '!MountShares' `
+  -Value "c:\mount_share.cmd"
 
 #install choco packages
 if ( $choco_list -ne "" ) {
