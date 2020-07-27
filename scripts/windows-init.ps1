@@ -81,24 +81,26 @@ $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 [System.IO.File]::WriteAllLines('c:\mount_share.cmd', $share_file, $Utf8NoBomEncoding)
 
 LogWrite "Create mount_share file, done"
-LogWrite "------------------------------------------------"
-LogWrite "Add to RunOnce mount_share file"
+LogWrite "Add mount_share script to the startup folder for all users"
 Copy-Item c:\mount_share.cmd 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup'
+LogWrite "------------------------------------------------"
 
 #install choco packages
 if ( $choco_list -ne "" ) {
-    LogWrite "Install choco packages: " $choco_list
+    LogWrite "Install choco packages:"
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $down = New-Object System.Net.WebClient
     
     iex ($down.DownloadString('https://chocolatey.org/install.ps1'))
     choco feature enable -n allowGlobalConfirmation 
-    $choco_list.Split() |ForEach-Object { choco install $_ -y } 
+    $choco_list.Split() |ForEach-Object { 
+      LogWrite "Installing " $_ 
+      choco install $_ -y
+    } 
   } 
   else {
-    LogWrite "No choco packages for install, skip..."
+    LogWrite "No choco packages listed for install, skip..."
   }
-
 
 LogWrite "------------------------------------------------"
 LogWrite "Init done"
