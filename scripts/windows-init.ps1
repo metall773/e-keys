@@ -64,6 +64,11 @@ foreach ($disk in $disks) {
 
 LogWrite "Format RAW disks, done"
 LogWrite "------------------------------------------------"
+LogWrite "Set TimeZone Russia TZ 2 Standard Time"
+
+Set-TimeZone -Name "Russia TZ 2 Standard Time"
+
+LogWrite "------------------------------------------------"
 LogWrite "Create mount_share file"
 
 #create c:\mount_share.cmd
@@ -94,7 +99,7 @@ if ( $choco_list -ne "" ) {
     iex ($down.DownloadString('https://chocolatey.org/install.ps1'))
     choco feature enable -n allowGlobalConfirmation 
     $choco_list.Split() |ForEach-Object { 
-      LogWrite "Installing " $_ 
+      LogWrite "     Installing " $_ 
       choco install $_ -y
     } 
   } 
