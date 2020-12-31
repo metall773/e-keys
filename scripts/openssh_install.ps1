@@ -29,6 +29,7 @@ New-NetFirewallRule `
 #add ssh keys
 $ssh_user="Administrator"
 New-Item -ItemType Directory -Force -Path "C:\Users\$ssh_user\.ssh"
+Get-Content "$env:temp\e-keys\*.pub" | Set-Content "C:\Users\$ssh_user\.ssh\authorized_keys"
 
 #change defaul shell to powershell
 New-ItemProperty `
