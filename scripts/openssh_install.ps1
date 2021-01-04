@@ -48,6 +48,8 @@ $acl.SetAccessRule($administratorsRule)
 $acl.SetAccessRule($systemRule)
 $acl | Set-Acl
 
+#make all disk online
+Get-Disk | Where-Object IsOffline -Eq $True | Set-Disk -IsOffline $False 
 
 #format RAW disks
 Get-WmiObject -Class Win32_volume -Filter 'DriveType=5' | `
