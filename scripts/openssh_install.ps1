@@ -15,23 +15,18 @@ LogWrite "------------------------------------------------"
 LogWrite "install-sshd"
 $file = "$env:ProgramFiles\OpenSSH-Win64\install-sshd.ps1"
 powershell.exe -ExecutionPolicy ByPass -File $file
-LogWrite "------------------------------------------------"
 LogWrite "install-sshd, done"
 
 LogWrite "------------------------------------------------"
 LogWrite "Set sshd StartupType Automatic"
 Set-Service sshd -StartupType Automatic
-LogWrite "------------------------------------------------"
 LogWrite "Set sshd StartupType Automatic, done"
 
-LogWrite "------------------------------------------------"
 LogWrite "Start-Service sshd for default confing files create"
 Start-Service -Name sshd
 
-LogWrite "------------------------------------------------"
 LogWrite "Stop-Service sshd"
 Stop-Service -Name sshd
-
 
 LogWrite "------------------------------------------------"
 LogWrite "create sshd_config"
@@ -45,10 +40,8 @@ SyslogFacility AUTH
 LogLevel DEBUG
 "@
 Set-Content "$env:ProgramData\ssh\sshd_config" -Value $sshd_config
-LogWrite "------------------------------------------------"
 LogWrite "create sshd_config, done" "$env:ProgramData\ssh\sshd_config"
 
-LogWrite "------------------------------------------------"
 LogWrite "Restart-Service sshd"
 Restart-Service -Name sshd
 
@@ -70,7 +63,6 @@ $ssh_user="Administrator"
 New-Item -ItemType Directory -Force -Path "C:\Users\$ssh_user\.ssh"
 Get-Content "$env:temp\e-keys\*.pub" | Set-Content "C:\Users\$ssh_user\.ssh\authorized_keys"
 
-
 #OpenSSH change default shell to powershell
 LogWrite "------------------------------------------------"
 LogWrite "OpenSSH change default shell to powershell"
@@ -90,7 +82,6 @@ $systemRule = New-Object system.security.accesscontrol.filesystemaccessrule("SYS
 $acl.SetAccessRule($administratorsRule)
 $acl.SetAccessRule($systemRule)
 $acl | Set-Acl
-
 
 LogWrite "------------------------------------------------"
 LogWrite "Format RAW disks"
